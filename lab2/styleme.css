@@ -1,0 +1,81 @@
+/* General Styles */
+body {
+  font-family: 'Verdana', sans-serif;
+  background-color: #f0f8ff;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Styling */
+header {
+  background-color: #4682b4;
+  color: white;
+  text-align: center;
+  padding: 30px;
+  font-size: 40px;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+}
+
+/* Content Styling */
+.content {
+  margin: 20px;
+}
+
+h2 {
+  color: #4682b4;
+  font-size: 28px;
+  font-family: 'Georgia', serif;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* List Styles */
+ul {
+  list-style-type: square;
+  padding-left: 20px;
+}
+
+ul li {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+/* Mood Images Styling */
+.moods {
+  display: flex;
+}
+.moods img {
+  width: 120px;
+  height: auto;
+  border: 2px solid #4682b4;
+  border-radius: 10px;
+}
+
+/* Neighbor Box */
+.neighbor {
+  background-color: #e6f7ff;
+  padding: 15px;
+  margin: 20px 0;
+  border-left: 4px solid #4682b4;
+  font-size: 18px;
+}
+
+/* Hyperlink Styling */
+a {
+  color: #4682b4;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Additional Customization */
+.content {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px
+}
