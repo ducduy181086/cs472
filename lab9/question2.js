@@ -25,9 +25,9 @@ function getController(req) {
 
     if (method === "GET") {
         if (url === "/image") return imageController;
-        if (url == "/pdf") return pdfController;
-        if (url == "/about") return aboutController;
-        if (url == "/home" || url == "/") return homeController;
+        if (url === "/pdf") return pdfController;
+        if (url === "/about") return aboutController;
+        if (url === "/home" || url == "/") return homeController;
     }
 
     return null;
