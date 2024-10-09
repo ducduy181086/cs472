@@ -20,14 +20,14 @@ http.createServer(function (req, res) {
 });
 
 function getController(req) {
-    const url = req.url;
+    const q = url.parse(req.url, true);
     const method = req.method;
 
     if (method === "GET") {
-        if (url === "/image") return imageController;
-        if (url === "/pdf") return pdfController;
-        if (url === "/about") return aboutController;
-        if (url === "/home" || url == "/") return homeController;
+        if (q.pathname === "/image") return imageController;
+        if (q.pathname === "/pdf") return pdfController;
+        if (q.pathname === "/about") return aboutController;
+        if (q.pathname === "/home" || url == "/") return homeController;
     }
 
     return null;
