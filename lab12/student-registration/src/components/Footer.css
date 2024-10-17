@@ -1,0 +1,11 @@
+footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+footer p {
+  margin: 0;
+}
