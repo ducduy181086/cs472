@@ -4,7 +4,7 @@ export function addStudent(req, res, next) {
     const { id, name, program } = req.body;
     if (!id || !name || !program) res.status(400).json({ error: 'Please input id, name, program.' });
 
-    const student = Student.create(new Student(id, name, program));
+    const student = Student.create(new Student(parseInt(id), name, program));
     if (student) {
         const relativeUrl = `${req.baseUrl}/${student.id}`;
         res.status(201).location(relativeUrl).json(student);
