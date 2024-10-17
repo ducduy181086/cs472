@@ -53,6 +53,7 @@ export default class Student {
 }
 
 const students = [
-    new Student(1, 'Anna Smith', 'Compro'),
-    new Student(2, 'Tom Jerry', 'MBA')
+    new Student(116257, 'Anna Smith', 'MBA'),
+    new Student(615789, 'John Doe', 'Compro'),
+    new Student(116868, 'Tom Jerryh', 'MBA')
 ];
