@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import "./Popular.css";
+
 import Timer from './Timer.js';
 
 /**
@@ -37,19 +39,19 @@ function Popular({ isLoading, searches, onRefresh, onChangeTerm }) {
         </div>
       </> : <>
         <div className="col-md-6">
-          <ol className="pl-0">
+          <ol className="ps-3">
             {searches.slice(0, 5).map((term, index) => (
               <li key={index}>
-                <a href="#" onClick={(e) => changeTerm(e, term)} className="text-decoration-none">{term}</a>
+                <button onClick={(e) => changeTerm(e, term)} className="anchor text-decoration-none">{term}</button>
               </li>
             ))}
           </ol>
         </div>
         <div className="col-md-6">
-          <ol start="6" className="pl-0">
+          <ol start="6" className="ps-3">
             {searches.slice(5).map((term, index) => (
               <li key={index + 5}>
-                <a href="#" onClick={(e) => changeTerm(e, term)} className="text-decoration-none">{term}</a>
+                <button onClick={(e) => changeTerm(e, term)} className="anchor text-decoration-none">{term}</button>
               </li>
             ))}
           </ol>
