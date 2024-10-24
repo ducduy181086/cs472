@@ -23,7 +23,7 @@ class Word {
 
             const lastRecordQuery = `SELECT * FROM recententries ORDER BY uId DESC LIMIT 1;`;
             const lastRecordResult = await client.query(lastRecordQuery);
-            if (lastRecordResult.rows[0].word != word) {
+            if (lastRecordResult.rows[0] && lastRecordResult.rows[0].word != word) {
                 const deleteOneCmd = `DELETE FROM recententries WHERE LOWER(word) LIKE $1`;
                 const deleteOneResult = await client.query(deleteOneCmd, [word]);
 
