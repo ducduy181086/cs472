@@ -54,6 +54,10 @@ class Word {
         word = word.toLowerCase();
         let result = "";
         await dbContext("getExample", async (client) => {
+            const countResult = await client.query('SELECT COUNT(*) FROM entries WHERE LOWER(word) LIKE $1', [word]);
+            const count = parseInt(countResult.rows[0].count, 10);
+            if (count == 0) return;
+
             const query = `SELECT * FROM exampleentries WHERE LOWER(word) LIKE $1 ORDER BY uId LIMIT 1;`;
             const queryResult = await client.query(query, [word]);
             if (queryResult.rows.length > 0) {
