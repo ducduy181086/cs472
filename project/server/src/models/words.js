@@ -21,26 +21,8 @@ class Word {
             const result = await client.query(query, [word]);
             result.rows.forEach((r, i) => items.push(new Definition(i + 1, r.wordtype, r.definition)));
 
-            const lastRecordQuery = `SELECT * FROM recententries ORDER BY uId DESC LIMIT 1;`;
-            const lastRecordResult = await client.query(lastRecordQuery);
-            if (!lastRecordResult.rows[0] || lastRecordResult.rows[0].word != word) {
-                const deleteOneCmd = `DELETE FROM recententries WHERE LOWER(word) LIKE $1`;
-                const deleteOneResult = await client.query(deleteOneCmd, [word]);
-
-                const insCmd = `INSERT INTO recententries (word) VALUES ($1) RETURNING *;`;
-                const insResult = await client.query(insCmd, [word]);
-
-                const deleteCmd = `
-                    WITH entries_to_delete AS (
-                        SELECT uId
-                        FROM recententries
-                        ORDER BY uId DESC
-                        OFFSET $1
-                    )
-                    DELETE FROM recententries
-                    WHERE uId IN (SELECT uId FROM entries_to_delete);`;
-                const deleteResult = await client.query(deleteCmd, [process.env.RECENT_AMOUNT]);
-            }
+            const insCmd = `INSERT INTO recententries (word) VALUES ($1) RETURNING *;`;
+            const insResult = await client.query(insCmd, [word]);
         });
 
         return items;
@@ -92,7 +74,12 @@ class Word {
     static async getRecentWords() {
         const items = []
         await dbContext("getRecentWords", async (client) => {
-            const query = `SELECT * FROM recententries ORDER BY uId DESC;`;
+            const query = `
+                SELECT word, COUNT(*) AS access_count
+                FROM recententries
+                GROUP BY word
+                ORDER BY access_count DESC
+                LIMIT 10;`;
             const result = await client.query(query);
             result.rows.forEach(w => items.push(w.word));
         });
