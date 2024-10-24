@@ -1,5 +1,5 @@
 /**
- * @param {{ word: string, definitions: Definition[], isLoading: boolean }} props
+ * @param {{ word: string, definitions: import("../services/WordsService.js").Definition[], isLoading: boolean }} props
  */
 function TermDefinition({ word, definitions, isLoading }) {
   return (
@@ -27,19 +27,6 @@ function TermDefinition({ word, definitions, isLoading }) {
       </div>
     </div>
   );
-}
-
-export class Definition {
-  /**
-   * @param {number} [number]
-   * @param {string} [wordtype]
-   * @param {string} [definition]
-   */
-  constructor(number, wordtype, definition) {
-    this.number = number;
-    this.wordtype = wordtype;
-    this.definition = definition;
-  }
 }
 
 export default TermDefinition;

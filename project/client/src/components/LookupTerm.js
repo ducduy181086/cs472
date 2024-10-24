@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 /**
- * @param { onLookup: (term: string) => void } props 
+ * @param {{initTerm: string, onLookup: (term: string) => void}} props 
  * @returns 
  */
-function LookupTerm({ onLookup }) {
+function LookupTerm({ initTerm, onLookup }) {
   const [term, setTerm] = useState('');
 
   const handleLookup = (e) => {
@@ -13,6 +13,10 @@ function LookupTerm({ onLookup }) {
       onLookup(term);
     }
   }
+
+  useEffect(() => {
+    setTerm(initTerm);
+  }, [initTerm]);
 
   return (
     <form onSubmit={handleLookup} className="form-inline d-flex justify-content-center">

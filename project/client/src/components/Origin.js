@@ -5,7 +5,7 @@ function Origin({ word, originText, isLoading }) {
   return (
     <div className="card">
       <div className="card-header">
-        <h5>Where does the word <strong>{word}</strong> come from?</h5>
+        <h5>Where does the word <strong><i>{word}</i></strong> come from?</h5>
       </div>
       <div className="card-body">
         {isLoading ? (
