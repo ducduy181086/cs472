@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 /**
  * @param {{ word: string, definitions: import("../services/WordsService.js").Definition[], isLoading: boolean }} props
  */
@@ -29,4 +31,4 @@ function TermDefinition({ word, definitions, isLoading }) {
   );
 }
 
-export default TermDefinition;
+export default memo(TermDefinition);

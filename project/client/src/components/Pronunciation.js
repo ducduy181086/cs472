@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 /**
@@ -24,4 +26,4 @@ function Pronunciation({word}) {
   );
 }
 
-export default Pronunciation;
+export default memo(Pronunciation);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 
 import "./Popular.css";
 
@@ -61,4 +61,4 @@ function Popular({ isLoading, searches, onRefresh, onChangeTerm }) {
   </>;
 }
 
-export default Popular;
+export default memo(Popular);

@@ -1,59 +1,24 @@
-import { useState, useEffect } from 'react';
-
-import * as service from '../services/WordsService.js';
+import '../type.js';
+import { useStateContext } from '../store/index.js';
+import { UPDATE_TERM, REFRESH } from '../store/actions/dictionaryAction.js';
+import { useDictionaryEffect } from '../store/effects/dictionaryEffect.js';
 import LookupTerm from './LookupTerm.js';
 import Popular from './Popular.js'
 import TermDefinition from './TermDefinition.js';
 import Pronunciation from './Pronunciation.js';
 import Origin from './Origin.js';
 
-const initState = {
-  needRefresh: {},
-  searches: [],
-  searchesIsLoading: false,
-  definitions: [],
-  definitionsIsLoading: false,
-  example: "",
-  exampleIsLoading: false,
-  term: ""
-}
-
 function Dictionary() {
-  const [state, setState] = useState(initState);
-  /**
-   * @param {string} term 
-   */
+  useDictionaryEffect();
+  const { state, dispatch } = useStateContext(s => s.dictionary);
+  /** @param {string} term */
   const handleLookup = (term) => {
-    setState(s => ({ ...s, term: term }));
+    dispatch({ type: UPDATE_TERM, payload: term });
   }
 
   const handleRefresh = () => {
-    setState(s => ({ ...s, needRefresh: {} }));
+    dispatch({ type: REFRESH });
   }
-
-  useEffect(() => {
-    if (!state.term) return;
-    (async () => {
-      setState(s => ({ ...s, definitionsIsLoading: true }));
-      const definitions = await service.getDefinitions(state.term);
-      setState(s => ({ ...s, definitions: definitions, definitionsIsLoading: false }));
-    })();
-
-    (async () => {
-      setState(s => ({ ...s, exampleIsLoading: true }));
-      const example = await service.getExample(state.term);
-      setState(s => ({ ...s, example: example, exampleIsLoading: false }));
-    })();
-  }, [state.term]);
-
-  useEffect(() => {
-    if (state.term !== "") return;
-    (async () => {
-      setState(s => ({ ...s, searchesIsLoading: true }));
-      const items = await service.getPopular();
-      setState(s => ({ ...s, searches: items, searchesIsLoading: false }));
-    })();
-  }, [state.term, state.needRefresh]);
 
   return (
     <div className="container mt-5">

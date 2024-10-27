@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 /**
  * @param {{ word: string, originText: string, isLoading: boolean }} props 
  */
@@ -22,4 +24,4 @@ function Origin({ word, originText, isLoading }) {
   );
 }
 
-export default Origin;
+export default memo(Origin);

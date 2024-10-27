@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 
 import './LookupTerm.css';
 
@@ -46,4 +46,4 @@ function LookupTerm({ initTerm, onLookup }) {
   );
 }
 
-export default LookupTerm;
+export default memo(LookupTerm);
