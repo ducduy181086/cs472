@@ -17,7 +17,9 @@ CREATE INDEX idx_exampleentries_word ON exampleentries (LOWER(word));
 
 CREATE TABLE recententries (
     uId BIGSERIAL PRIMARY KEY,
-    word VARCHAR(25) NOT NULL
+    word VARCHAR(25) NOT NULL,
+    count BIGINT NOT NULL
 );
 
-CREATE INDEX idx_recententries_uid_desc ON recententries (uId DESC);
+CREATE INDEX idx_recententries_word ON recententries (LOWER(word));
+CREATE INDEX idx_recententries_count_desc ON recententries (count DESC);

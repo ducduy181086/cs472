@@ -16,15 +16,34 @@ class Word {
     static async getDefinitions(word) {
         word = word.toLowerCase();
         const items = [];
+    
         await dbContext("getDefinitions", async (client) => {
+            // Start transaction
+            await client.query('BEGIN');
+    
+            // Fetch definitions for the word
             const query = `SELECT * FROM entries WHERE LOWER(word) LIKE $1;`;
             const result = await client.query(query, [word]);
             result.rows.forEach((r, i) => items.push(new Definition(i + 1, r.wordtype, r.definition)));
-
-            const insCmd = `INSERT INTO recententries (word) VALUES ($1) RETURNING *;`;
-            const insResult = await client.query(insCmd, [word]);
+    
+            // Check if the word exists in recententries
+            const selectQuery = `SELECT count FROM recententries WHERE word = $1 FOR UPDATE;`;
+            const selectResult = await client.query(selectQuery, [word]);
+    
+            if (selectResult.rows.length > 0) {
+                // Word exists, update count by 1
+                const updateQuery = `UPDATE recententries SET count = count + 1 WHERE word = $1 RETURNING *;`;
+                await client.query(updateQuery, [word]);
+            } else {
+                // Word does not exist, insert with count set to 1
+                const insertQuery = `INSERT INTO recententries (word, count) VALUES ($1, 1) RETURNING *;`;
+                await client.query(insertQuery, [word]);
+            }
+    
+            // Commit the transaction
+            await client.query('COMMIT');
         });
-
+    
         return items;
     }
 
@@ -72,13 +91,12 @@ class Word {
      * @returns {Promise<string[]>}
      */
     static async getRecentWords() {
-        const items = []
+        const items = [];
         await dbContext("getRecentWords", async (client) => {
             const query = `
-                SELECT word, COUNT(*) AS access_count
+                SELECT word
                 FROM recententries
-                GROUP BY word
-                ORDER BY access_count DESC
+                ORDER BY count DESC
                 LIMIT 10;`;
             const result = await client.query(query);
             result.rows.forEach(w => items.push(w.word));
